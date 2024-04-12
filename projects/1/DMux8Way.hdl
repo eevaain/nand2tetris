@@ -19,10 +19,4 @@ CHIP DMux8Way {
 
     PARTS:
     //// Replace this comment with your code.
-    DMux(in=in, sel=sel[2], a=o1, b=o2);
-    DMux4Way(in=o1, sel=sel[0..1], a=a, b=b, c=c, d=d);
-    DMux4Way(in=o2, sel=sel[0..1], a=e, b=f, c=g, d=h);
-
-    // double dot notation means slicing bits index from 0 to 1 i.e. can be 00, 01, 10, 11
-    // this makes sense because dmux4way requires a 2 bit input!
 }

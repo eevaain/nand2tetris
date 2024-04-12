@@ -42,10 +42,4 @@ CHIP ALU {
 
     PARTS:
     //// Replace this comment with your code.
-
-
-
-    // 8 bit flag bus... maybe use 8 multiplexors? or two 4 way muxes?
-    // use muxes as if statement (false as 0, true as 1) -> link muxes together like nesting ifs?
-    Mux(a, b, sel, out)
 }
