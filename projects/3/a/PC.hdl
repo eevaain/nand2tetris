@@ -21,16 +21,18 @@ CHIP PC {
 
     // Inc Bit (recall hdl code is not sequential!!!)
     // All this does is increment a bit or keep it the same
-    Inc16(in=buffer, out=outInc);
-    Mux16(a=buffer, b=outInc, sel=inc, out=outMux1);
+    // "loop" is a wire which connects input and output together
+    Inc16(in=loop, out=outInc);
+    Mux16(a=loop, b=outInc, sel=inc, out=outMux1);
 
     // Load Bit
     // b=in is the counting base
-    // when sel = 1 then, buffer = counting base
-    Mux16(a=outMux1, b=in, sel=load, out=buffer);
+    // when sel = 1 then, loop = new counting base, if sel = 0 then counting base stays the same!
+    Mux16(a=outMux1, b=in, sel=load, out=outMux2);
 
-    Mux16(a=buffer, b=false, sel=reset, out=outReset);
-    Register(in=outReset, load=true, out=out, out=buffer);
+    // if sel = 1 then program counter will go back to zero
+    Mux16(a=outMux2, b=false, sel=reset, out=outReset);
+    Register(in=outReset, load=true, out=out, out=loop);
     
 
 
