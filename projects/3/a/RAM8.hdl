@@ -9,9 +9,28 @@
  * The value of the selected register is emitted by out.
  */
 CHIP RAM8 {
-    IN in[16], load, address[3];
+    IN in[16], load, address[3]; // 3 bit address represents 8 combinations of addresses, hence 8 registers used in the code
     OUT out[16];
+    
+    PARTS: 
+    DMux8Way(in=load, sel=address, a=a, b=b, c=c, d=d, e=e, f=f, g=g, h=h); // "routes" the load signal to one of these 8 registers below
+    // a,b,c,d,e,f,g,h are the outputs of the dmux8way! in and sel are the inputs.
 
-    PARTS:
-    //// Replace this comment with your code.
+    // although all registers recieve the same input, only one of them actually stores the input
+    // this is because only one register will have a "high" load signal (we figured this out using the DMUX above)
+    Register(in=in, load=a, out=oa);
+    Register(in=in, load=b, out=ob);
+    Register(in=in, load=c, out=oc);
+    Register(in=in, load=d, out=od);
+
+    Register(in=in, load=e, out=oe);
+    Register(in=in, load=f, out=of);
+    Register(in=in, load=g, out=og);
+    Register(in=in, load=h, out=oh);
+    
+    // this mux chooses one of the 8 register outputs based on the select line
+    Mux8Way16(a=oa, b=ob, c=oc, d=od, e=oe, f=of, g=og, h=oh, sel=address, out=out);
+    
+
+    
 }

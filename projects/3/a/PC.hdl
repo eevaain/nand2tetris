@@ -10,9 +10,32 @@
  * else              out(t+1) = out(t)
  */
 CHIP PC {
-    IN in[16],inc, load, reset;
+    IN in[16], inc, load, reset;
     OUT out[16];
     
     PARTS:
-    //// Replace this comment with your code.
+    //// use chips from chapter 2, 
+
+    // set counter to address of "n" and then have it keep incrementing (implementation for jmp to execute instruction n)
+    // feedback is zero at the start
+
+    // Inc Bit (recall hdl code is not sequential!!!)
+    // All this does is increment a bit or keep it the same
+    Inc16(in=buffer, out=outInc);
+    Mux16(a=buffer, b=outInc, sel=inc, out=outMux1);
+
+    // Load Bit
+    // b=in is the counting base
+    // when sel = 1 then, buffer = counting base
+    Mux16(a=outMux1, b=in, sel=load, out=buffer);
+
+    Mux16(a=buffer, b=false, sel=reset, out=outReset);
+    Register(in=outReset, load=true, out=out, out=buffer);
+    
+
+
+    
+
+    
+
 }
