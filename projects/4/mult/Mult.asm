@@ -48,7 +48,7 @@ M=0
     @multiplier
     M=M-1 // multiplier = multiplier - 1
     @LOOP
-    0;JMP unconditional jump, goto (LOOP)
+    0;JMP // unconditional jump, goto (LOOP)
 
 (STOP)
     @sum
