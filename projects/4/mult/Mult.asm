@@ -7,4 +7,60 @@
 // (R0, R1, R2 refer to RAM[0], RAM[1], and RAM[2], respectively.)
 // The algorithm is based on repetitive addition.
 
-//// Replace this comment with your code.
+// my pseudocode below (writing this before assembly implementation):
+
+// (LOOP)
+// if multiplier = 0 goto stop
+// sum = sum + number
+// multiplier = multiplier - 1
+// goto LOOP
+// 
+// (STOP)
+// R2 = sum
+
+
+@R0
+D=M
+@number
+M=D // variable number at some random address is equal to value stored in address R0 (RAM)
+
+@R1
+D=M
+@multiplier
+M=D // same as above, but for R1
+
+@sum // sum starts at 0 
+M=0 
+
+(LOOP)
+    @multiplier
+    D=M
+    @STOP
+    D;JEQ // if multiplier = 0 then goto STOP
+
+    @sum
+    D=M
+    @number
+    D=D+M
+    @sum
+    M=D // sum = sum + number
+
+    @multiplier
+    M=M-1 // multiplier = multiplier - 1
+    @LOOP
+    0;JMP unconditional jump, goto (LOOP)
+
+(STOP)
+    @sum
+    D=M
+    @R2
+    M=D // sum is stored in RAM[2]
+
+(END)
+    @END
+    0;JMP // infinite loop between @END and 0;JMP 
+
+
+
+
+D;JGT //if multiplier is greater than 0 i.e. if multiplier = 3, then jump
