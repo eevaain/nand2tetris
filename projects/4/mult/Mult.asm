@@ -59,8 +59,3 @@ M=0
 (END)
     @END
     0;JMP // infinite loop between @END and 0;JMP 
-
-
-
-
-D;JGT //if multiplier is greater than 0 i.e. if multiplier = 3, then jump
