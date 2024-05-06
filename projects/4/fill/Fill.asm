@@ -11,13 +11,18 @@
 // fill entire memory map with either white or black pixels
 
 // pseudocode underneath
-// if pressed != 0 screen is white
+
+// IN MAIN LOOP:
+// if ISPRESSED != 0, screen is black
+
+// IN PRESSED LOOP:
+// if ISPRESSED = 0, screen is white
 
 
 
 (LOOP)
-    @KBD
-    M=0 // clear screen buffer at start? 
+    @SCREEN
+    M=0 // clear screen buffer at start? i think this makes sense cus i did sumn like this in C++ before...
 
     @KBD
     D=M // store keypress in register D
@@ -33,13 +38,13 @@
 // note: 8192 addresses incluiding @SCREEN is bitmap of screen
 (ISPRESSED)
     @SCREEN 
-    M=-1 // replace D here with value for black
+    M=-1 // replace D here with value for black (-1)
 
     @KBD
     D=M // store keypress in register D
 
     @LOOP
-    D;JEQ // if register D has doesnt have content, then jump back to LOOP
+    D;JEQ // if register D has doesnt have content, then jump back to LOOP, otherwise continue
 
     @ISPRESSED
     0;JMP // jump back to start of ISPRESSED
