@@ -19,6 +19,7 @@
 // R2 = sum
 
 
+// REMEMBER: @n will always be equal to M
 @R0
 D=M
 @number
@@ -35,8 +36,8 @@ M=0
 (LOOP)
     @multiplier
     D=M
-    @STOP
-    D;JEQ // if multiplier = 0 then goto STOP
+    @STOP 
+    D;JEQ // if multiplier = 0 then goto STOP (its convention to write @STOP ontop of this condition)
 
     @sum
     D=M
