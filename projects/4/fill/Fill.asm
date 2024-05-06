@@ -19,23 +19,24 @@
 // if ISPRESSED = 0, screen is white
 
 
-
+// REMEMBER: @n will always be equal to M
 (LOOP)
-    @SCREEN
-    M=0 // clear screen buffer at start? i think this makes sense cus i did sumn like this in C++ before...
-
     @KBD
     D=M // store keypress in register D
 
+    /////////////////// EVENT LISTENERS /////////////////// 
+    @ISNOTPRESSED
+    D;JEQ // goto this if contents in register D = 0
+
     @ISPRESSED
-    D;JNE // if register D has content (keypress), then jump
-          // this line of code acts as an event listener
+    D;JNE // goto this if contents in register D != 0
+    /////////////////// EVENT LISTENERS /////////////////// 
 
     @LOOP
     0;JMP // jump back to start of LOOP
 
 
-// note: 8192 addresses incluiding @SCREEN is bitmap of screen
+// note: 8192 addresses including @SCREEN is bitmap of screen
 (ISPRESSED)
     @SCREEN 
     M=-1 // replace D here with value for black (-1)
@@ -48,3 +49,16 @@
 
     @ISPRESSED
     0;JMP // jump back to start of ISPRESSED
+
+(ISNOTPRESSED)
+    @SCREEN
+    M=0
+
+    @KBD
+    D=M
+
+    @LOOP
+    D;JNE
+
+    @ISNOTPRESSED
+    0;JMP 
