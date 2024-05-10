@@ -33,4 +33,47 @@ CHIP CPU {
 
     PARTS:
 	//// Replace this comment with your code.
+
+    // Decide whether to use A instruction or D instruction
+    
+
+    // A-INSTRUCTION
+    Mux16(a=instruction, b=aluOut, sel=instruction[15], out=opcodeOut); // sel uses first bit of instruction 
+    ARegister(in=opcodeOut, load=instruction[5], out=aregOut, out=addressM);
+
+
+    // D-INSTRUCTION
+    DRegister(in=aluOut, load=instruction[4], out=dregOut);
+    Mux16(a=inM, b=aregOut, sel=instruction[12], out=instructOut); // decides between bits from data memory or instruction memory
+
+
+
+    ALU(x=dregOut, y=aregOut,
+        zx=instruction[11],
+        nx=instruction[10],
+        zy=instruction[9],
+        ny=instruction[8],
+        f=instruction[7],
+        no=instruction[6],
+        zr=outZr,
+        ng=outNg,
+        out=aluOut,
+        out=outM); // recall zr and ng are also outputs. aluOut = outM
+
+
+    // implement conditions here...? -> off of LSB (3) of instruction
+
+    // implement 16 bit XOR for conditional jumps??
+    // implement 16 bit AND for unconditional jump??
+    // implement NOT (not + OR) for no jump? 
+
+    PC(in=aregOut, load=, inc=, reset=reset, out=pc); // need a c bit for load?
+
+
+    // need instruction[3] for the writeM bit --> feed into data memory
+    And(a=instruction[3], b=)
+
+    
+    
+    
 }
